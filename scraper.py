@@ -15,7 +15,6 @@ def clean_text(text):
     text = re.sub(r'\(.*?\)', '', text)  # Remove parentheses and everything inside them
     return text if text else "N/A"
 
-
 def clean_vice_president(vp_text):
     """Formats the vice president text for better readability."""
     vp_text = re.sub(r'\[.*?\]', '', vp_text)  # Remove footnotes
