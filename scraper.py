@@ -19,6 +19,8 @@ def clean_vice_president(vp_text):
     """Cleans and formats vice president names."""
     return clean_text(re.sub(r'(?<=\D)(\d{4})', r' \1', vp_text))  # Ensure spacing before years
 
+
+
 def format_term(term):
     """Formats the term date range."""
     term = term.replace("\u2013", "-")
