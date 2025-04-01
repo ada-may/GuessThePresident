@@ -2,9 +2,11 @@ import requests
 from scraper import scrape_presidents
 from dateutil import parser
 import json
-
+import datetime
 
 # converts a georgian date to the hebrew date
+
+
 def get_hebrew_date(gy, gm, gd):
     base_url = "https://www.hebcal.com/converter"  # API endpoint
     params = {"cfg": "json", "gy": gy, "gm": gm, "gd": gd,
@@ -29,8 +31,12 @@ def get_hebrew_date(gy, gm, gd):
 def convert_to_date(date_str):
     """Converts a date string (e.g., 'March 4, 1913') to a datetime object."""
     try:
+        if date_str == "Incumbent":
+            return datetime.date.today()
         # Use dateutil's parser to convert the date string to a datetime object
-        return parser.parse(date_str)
+        date_obj = parser.parse(date_str)
+        # Return only the date part, excluding the time
+        return date_obj.date()
     except ValueError as e:
         print(f"Error parsing date '{date_str}': {e}")
         return None
@@ -66,8 +72,8 @@ def process_presidents_and_get_hebrew_dates():
 
             if start_hebrew and end_hebrew:
                 print(
-                    f"Events for {president['name']} ({start_date} -"
-                    "{end_date}):")
+                    f"Term of {president['name']} ({start_date} -"
+                    f" {end_date}):")
                 print(
                     f"Start Hebrew Date: {json.dumps(start_hebrew, indent=4)}")
                 print(f"End Hebrew Date: {json.dumps(end_hebrew, indent=4)}")
