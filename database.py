@@ -9,10 +9,10 @@ def create_table():
     cursor = conn.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS presidents (
-            id INTEGER PRIMARY KEY,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             number INTEGER,
             picture TEXT,
-            name TEXT,
+            name TEXT UNIQUE,
             birth_death TEXT,
             term TEXT,
             party TEXT,
@@ -25,7 +25,7 @@ def create_table():
 
 
 def insert_president(data):
-    """Inserts a president into the table."""
+    """Inserts a new president into the table."""
     conn = sqlite3.connect(DATABASE_NAME)
     cursor = conn.cursor()
     cursor.execute('''
@@ -47,8 +47,32 @@ def fetch_all_presidents():
     records = cursor.fetchall()
     conn.close()
 
-    for record in records:
-        print(record)  # Print each row
+    return records
 
 
-fetch_all_presidents()
+def fetch_president_by_name(name):
+    """Fetch a president by their name."""
+    conn = sqlite3.connect(DATABASE_NAME)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM presidents WHERE name = ?", (name,))
+    record = cursor.fetchone()
+    conn.close()
+    return record
+
+
+def clear_table():
+    """Deletes all records from the presidents table."""
+    conn = sqlite3.connect(DATABASE_NAME)
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM presidents")
+    conn.commit()
+    conn.close()
+
+
+# Run this when the script is executed directly
+if __name__ == "__main__":
+    create_table()
+    print("Database and table are set up!")
+    print("All Presidents:")
+    for pres in fetch_all_presidents():
+        print(pres)
