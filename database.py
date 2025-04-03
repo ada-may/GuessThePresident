@@ -4,13 +4,12 @@ DATABASE_NAME = "presidents.db"
 
 
 def create_table():
-    """Creates the presidents table if it does not exist."""
+    """Creates the presidents table if it does not exist, with 'number' as the primary key."""
     conn = sqlite3.connect(DATABASE_NAME)
     cursor = conn.cursor()
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS presidents (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            number INTEGER,
+            number INTEGER PRIMARY KEY,
             picture TEXT,
             name TEXT UNIQUE,
             birth_death TEXT,
@@ -40,14 +39,21 @@ def insert_president(data):
 
 
 def fetch_all_presidents():
-    """Fetch all records from the presidents table."""
+    """Fetch all records from the presidents table as a list of dictionaries."""
     conn = sqlite3.connect(DATABASE_NAME)
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM presidents")
+
+    # Select all columns but without the `id` column, as you've made `number` the primary key
+    cursor.execute(
+        "SELECT number, picture, name, birth_death, term, party, election, vice_president FROM presidents")
+
     records = cursor.fetchall()
     conn.close()
 
-    return records
+    # Convert the list of tuples to a list of dictionaries
+    columns = ["Number", "Picture", "Name", "Birth & Death",
+               "Term", "Party", "Election", "Vice President"]
+    return [dict(zip(columns, record)) for record in records]
 
 
 def fetch_president_by_name(name):
@@ -67,12 +73,3 @@ def clear_table():
     cursor.execute("DELETE FROM presidents")
     conn.commit()
     conn.close()
-
-
-# Run this when the script is executed directly
-if __name__ == "__main__":
-    create_table()
-    print("Database and table are set up!")
-    print("All Presidents:")
-    for pres in fetch_all_presidents():
-        print(pres)
