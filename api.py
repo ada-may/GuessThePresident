@@ -2,85 +2,70 @@ import requests
 from scraper import scrape_presidents
 from dateutil import parser
 import json
-import datetime
-
-# converts a georgian date to the hebrew date
 
 
-def get_hebrew_date(gy, gm, gd):
-    base_url = "https://www.hebcal.com/converter"  # API endpoint
-    params = {"cfg": "json", "gy": gy, "gm": gm, "gd": gd,
-              "g2h": 1, "strict": 1}  # request parameters
+def get_events(year):
+    """Fetches historical events for a given year."""
+    URL = f"https://events.historylabs.io/year/{year}"
     try:
-        response = requests.get(base_url, params=params)  # send get request
-
-        data = response.json()
-        formatted_data = {
-            # format georgian date
-            "Gregorian Date": f"{gy}-{gm:02d}-{gd:02d}",
-            "Hebrew Year": data.get("hy", "N/A"),  # get hebrew year
-            "Hebrew Month": data.get("hm", "N/A"),  # get hebrew month
-            "Hebrew Day": data.get("hd", "N/A")  # get hebrew day
-        }
-        return formatted_data
-    except Exception as e:
-        print(f"Error fetching Hebrew date: {e}")
+        response = requests.get(URL)
+        response.raise_for_status()  # Raise an error for bad status codes
+        return response.json()  # Assuming the API returns JSON
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching events for {year}: {e}")
         return None
 
 
-def convert_to_date(date_str):
-    """Converts a date string (e.g., 'March 4, 1913') to a datetime object."""
+def extract_years(term):
+    """Extracts the start and end year from a term string."""
     try:
-        if date_str == "Incumbent":
-            return datetime.date.today()
-        # Use dateutil's parser to convert the date string to a datetime object
-        date_obj = parser.parse(date_str)
-        # Return only the date part, excluding the time
-        return date_obj.date()
+        start_date, end_date = term.split(" - ")
+        start_year = parser.parse(start_date).year
+
+        # If the end date is "Incumbent", set it to 2026
+        if end_date.strip() == "Incumbent":
+            end_year = 2026
+        else:
+            end_year = parser.parse(end_date).year
+
+        return start_year, end_year
     except ValueError as e:
-        print(f"Error parsing date '{date_str}': {e}")
-        return None
+        print(f"Error parsing term '{term}': {e}")
+        return None, None
 
 
-def process_presidents_and_get_hebrew_dates():
-    """Process the presidents and get their Hebrew start and end dates."""
+def get_events_for_term(term):
+    """Gets all events for years between the start and end of a term."""
+    start_year, end_year = extract_years(term)
+    print(f"Extracted years: {start_year} to {end_year}")  # Debugging step
+    if start_year and end_year:
+        events = {}
+        for year in range(start_year, end_year):  # Ensure full range is included
+            print(f"Fetching events for {year}")  # Debugging step
+            events[year] = get_events(year)
+        return events
+    return None
+
+
+def process_presidents_and_get_events():
+    """Process the presidents and fetch historical events for their term years."""
     presidents = scrape_presidents()  # Get the list of presidents
+    all_events = {}
 
     for president in presidents:
-        term = president["term"]  # Get the term (start and end dates)
+        term = president["term"]
+        events = get_events_for_term(term)
 
-        # Split the term into start and end dates
-        try:
-            start_date_str, end_date_str = term.split(" - ")
+        if events:
+            # Ensures uniqueness
+            unique_key = f"{president['name']} - {president['number']}"
+            all_events[unique_key] = {
+                "term": term,
+                "events": events
+            }
 
-            # Convert the date strings to datetime objects
-            start_date = convert_to_date(start_date_str)
-            end_date = convert_to_date(end_date_str)
-
-            # If conversion failed, skip this president
-            if not start_date or not end_date:
-                print(
-                    f"Skipping president {president['name']} due to "
-                    "invalid date format.")
-                continue
-
-            # Get the Hebrew start date for the president's term
-            start_hebrew = get_hebrew_date(
-                start_date.year, start_date.month, start_date.day)
-            end_hebrew = get_hebrew_date(
-                end_date.year, end_date.month, end_date.day)
-
-            if start_hebrew and end_hebrew:
-                print(
-                    f"Term of {president['name']} ({start_date} -"
-                    f" {end_date}):")
-                print(
-                    f"Start Hebrew Date: {json.dumps(start_hebrew, indent=4)}")
-                print(f"End Hebrew Date: {json.dumps(end_hebrew, indent=4)}")
-                print("-" * 40)  # Separator for clarity
-
-        except ValueError as e:
-            print(f"Error processing term for {president['name']}: {e}")
+            with open("presidents_events.json", "w", encoding="utf-8") as f:
+                json.dump(all_events, f, indent=4)
 
 
-process_presidents_and_get_hebrew_dates()
+process_presidents_and_get_events()
