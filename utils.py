@@ -1,6 +1,7 @@
 from dateutil import parser
 import streamlit as st
 from openai import AzureOpenAI
+import pandas as pd
 
 
 def extract_years(term):
@@ -33,10 +34,13 @@ def display_side_bar():
     st.sidebar.header('Settings')
 
 
-def display_chatbot(president_name, openai_api_key=st.sidebar.text_input('OpenAI API Key'), openai_api_endpoint=st.sidebar.text_input('OpenAI API Endpoint')):
+def display_chatbot(president_name, openai_api_key=st.sidebar
+                    .text_input('OpenAI API Key'), openai_api_endpoint=st.
+                    sidebar.text_input('OpenAI API Endpoint')):
     # chatbot
     user_input = st.text_area(
-        "Ask the chatbot to learn more", f"I want to learn more about {president_name}.")
+        "Ask the chatbot to learn more",
+        f"I want to learn more about {president_name}.")
     suggestion = st.button("Get Suggestion")  # button
     st.write("💬 Chatbot: ")
 
@@ -55,3 +59,17 @@ def display_chatbot(president_name, openai_api_key=st.sidebar.text_input('OpenAI
             stream=True,
         )
         st.write_stream(stream)
+
+
+def calculate_durations(df):
+    durations = []
+    for _, row in df.iterrows():
+        start, end = utils.extract_years(row["Term"])
+        if start and end:
+            durations.append({
+                "Name": row["Name"],
+                "Start": start,
+                "End": end,
+                "Years in Office": end - start
+            })
+    return pd.DataFrame(durations)
