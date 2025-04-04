@@ -1,6 +1,5 @@
 import requests
 from bs4 import BeautifulSoup
-import json
 import re
 
 URL = "https://en.wikipedia.org/wiki/List_of_presidents_of_the_United_States"
@@ -116,8 +115,3 @@ def scrape_presidents():
             continue
 
     return presidents
-
-
-presidents = scrape_presidents()
-
-print(json.dumps(presidents, indent=4))

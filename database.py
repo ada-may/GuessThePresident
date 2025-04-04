@@ -93,11 +93,15 @@ def fetch_random_president():
     else:
         return None
 
+
 def fetch_wrong_presidents(correct_name, count=3):
-    """Fetches a list of 'count' wrong president names (not including the correct one)."""
+    """Fetches a list of 'count' wrong president names (not
+    including the correct one)."""
     conn = sqlite3.connect(DATABASE_NAME)
     cursor = conn.cursor()
-    cursor.execute("SELECT name FROM presidents WHERE name != ? ORDER BY RANDOM() LIMIT ?", (correct_name, count))
+    cursor.execute(
+        "SELECT name FROM presidents WHERE name != ? ORDER BY "
+        "RANDOM() LIMIT ?", (correct_name, count))
     wrong_names = [row[0] for row in cursor.fetchall()]
     conn.close()
     return wrong_names
