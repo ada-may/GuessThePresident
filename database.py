@@ -1,10 +1,12 @@
 import sqlite3
+import pandas as pd
 
 DATABASE_NAME = "presidents.db"
 
 
 def create_table():
-    """Creates the presidents table if it does not exist, with 'number' as the primary key."""
+    """Creates the presidents table if it does not exist,
+    with 'number' as the primary key."""
     conn = sqlite3.connect(DATABASE_NAME)
     cursor = conn.cursor()
     cursor.execute('''
@@ -23,53 +25,57 @@ def create_table():
     conn.close()
 
 
-def insert_president(data):
-    """Inserts a new president into the table."""
-    conn = sqlite3.connect(DATABASE_NAME)
-    cursor = conn.cursor()
-    cursor.execute('''
-        INSERT INTO presidents (number, picture, name, birth_death, term,
-                   party, election, vice_president)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    ''', (data["number"], data["picture"], data["name"], data["birth_death"],
-          data["term"], data["party"], data["election"],
-          data["vice_president"]))
-    conn.commit()
-    conn.close()
-
-
 def fetch_all_presidents():
-    """Fetch all records from the presidents table as a list of dictionaries."""
+    """Fetch all records from the presidents table
+    as a list of dictionaries."""
     conn = sqlite3.connect(DATABASE_NAME)
     cursor = conn.cursor()
 
-    # Select all columns but without the `id` column, as you've made `number` the primary key
+    # Select all columns but without the `id` column, as you've made `number`
+    #  the primary key
     cursor.execute(
-        "SELECT number, picture, name, birth_death, term, party, election, vice_president FROM presidents")
+        "SELECT number, picture, name, birth_death, term, party, election,"
+        " vice_president FROM presidents")
 
     records = cursor.fetchall()
     conn.close()
-
     # Convert the list of tuples to a list of dictionaries
     columns = ["Number", "Picture", "Name", "Birth & Death",
                "Term", "Party", "Election", "Vice President"]
-    return [dict(zip(columns, record)) for record in records]
+    df = pd.DataFrame(records, columns=columns)
+    return df.drop(columns=["Picture"])
 
 
-def fetch_president_by_name(name):
+def fetch_president_names():
     """Fetch a president by their name."""
     conn = sqlite3.connect(DATABASE_NAME)
     cursor = conn.cursor()
-    cursor.execute("SELECT * FROM presidents WHERE name = ?", (name,))
-    record = cursor.fetchone()
+    cursor.execute("SELECT name FROM presidents ORDER BY number")
+    names = [row[0] for row in cursor.fetchall()]
     conn.close()
-    return record
+    return names
 
 
-def clear_table():
-    """Deletes all records from the presidents table."""
+def insert_president(president):
     conn = sqlite3.connect(DATABASE_NAME)
     cursor = conn.cursor()
-    cursor.execute("DELETE FROM presidents")
+
+    cursor.execute('''
+        INSERT OR IGNORE INTO presidents
+        (number, picture, name, birth_death, term, party, election,
+                   vice_president)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (
+        president.get("number"),
+        president.get("picture"),
+        president.get("name"),
+        president.get("birth_death"),
+        president.get("term"),
+        president.get("party"),
+        president.get("election"),
+        president.get("vice_president")
+    )
+    )
+
     conn.commit()
     conn.close()

@@ -1,7 +1,6 @@
 import requests
 from scraper import scrape_presidents
 from dateutil import parser
-import json
 
 
 def get_events(year):
@@ -37,35 +36,48 @@ def extract_years(term):
 def get_events_for_term(term):
     """Gets all events for years between the start and end of a term."""
     start_year, end_year = extract_years(term)
-    print(f"Extracted years: {start_year} to {end_year}")  # Debugging step
-    if start_year and end_year:
-        events = {}
-        for year in range(start_year, end_year):  # Ensure full range is included
-            print(f"Fetching events for {year}")  # Debugging step
-            events[year] = get_events(year)
-        return events
-    return None
+
+    # Create an empty dictionary to hold events for each year
+    events_by_year = {}
+
+    # Loop through the range of years from the start to end of the term
+    for year in range(start_year, end_year):
+        # Fetch events for the given year
+        data = get_events(year)
+
+        # Ensure we have events data before trying to process it
+        if data and "events" in data:
+            # Extract only the 'content' from each event and store it in a list
+            events_by_year[year] = [event["content"]
+                                    for event in data["events"]]
+        else:
+            # If no events are found, store an empty list
+            events_by_year[year] = []
+
+    return events_by_year
 
 
-def process_presidents_and_get_events():
-    """Process the presidents and fetch historical events for their term years."""
-    presidents = scrape_presidents()  # Get the list of presidents
-    all_events = {}
+def get_events_for_president(president_name):
+    """Process the presidents and fetch historical events for their
+    term years."""
+    presidents = scrape_presidents()
+    matching_presidents = [
+        pres for pres in presidents if pres["name"] == president_name]
 
-    for president in presidents:
-        term = president["term"]
-        events = get_events_for_term(term)
+    if not matching_presidents:
+        return None
 
-        if events:
-            # Ensures uniqueness
-            unique_key = f"{president['name']} - {president['number']}"
-            all_events[unique_key] = {
-                "term": term,
-                "events": events
-            }
+    result = {"name": president_name, "terms": []}
 
-            with open("presidents_events.json", "w", encoding="utf-8") as f:
-                json.dump(all_events, f, indent=4)
+    for president in matching_presidents:
+        term_events = {
+            "number": president["number"],
+            "term": president["term"],
+            "events": get_events_for_term(president["term"])
+        }
+        result["terms"].append(term_events)
+
+    return result
 
 
-process_presidents_and_get_events()
+# print(json.dumps(get_events_for_president("Donald Trump"), indent=4))

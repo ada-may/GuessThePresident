@@ -119,4 +119,5 @@ def scrape_presidents():
 
 
 presidents = scrape_presidents()
+
 print(json.dumps(presidents, indent=4))
