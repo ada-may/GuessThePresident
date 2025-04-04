@@ -1,6 +1,6 @@
 import requests
 from scraper import scrape_presidents
-from dateutil import parser
+from utils import extract_years
 
 
 def get_events(year):
@@ -15,22 +15,7 @@ def get_events(year):
         return None
 
 
-def extract_years(term):
-    """Extracts the start and end year from a term string."""
-    try:
-        start_date, end_date = term.split(" - ")
-        start_year = parser.parse(start_date).year
 
-        # If the end date is "Incumbent", set it to 2026
-        if end_date.strip() == "Incumbent":
-            end_year = 2026
-        else:
-            end_year = parser.parse(end_date).year
-
-        return start_year, end_year
-    except ValueError as e:
-        print(f"Error parsing term '{term}': {e}")
-        return None, None
 
 
 def get_events_for_term(term):
