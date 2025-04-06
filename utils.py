@@ -41,7 +41,7 @@ def display_chatbot(president_name, openai_api_key=st.sidebar
     user_input = st.text_area(
         "Ask the chatbot to learn more",
         f"I want to learn more about {president_name}.")
-    suggestion = st.button("Get Suggestion")  # button
+    suggestion = st.button("Go")  # button
     st.write("💬 Chatbot: ")
 
     client = AzureOpenAI(
@@ -64,7 +64,7 @@ def display_chatbot(president_name, openai_api_key=st.sidebar
 def calculate_durations(df):
     durations = []
     for _, row in df.iterrows():
-        start, end = utils.extract_years(row["Term"])
+        start, end = extract_years(row["Term"])
         if start and end:
             durations.append({
                 "Name": row["Name"],
