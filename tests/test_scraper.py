@@ -1,7 +1,6 @@
 import pytest
 import scraper
 from bs4 import BeautifulSoup
-import requests
 from unittest.mock import patch
 
 
@@ -46,7 +45,8 @@ SAMPLE_HTML = """
 <tr>
     <td>1</td>
     <td><img src="//upload.wikimedia.org/sample.jpg"/></td>
-    <td><b>George Washington</b><br><span style="font-size: 85%;">b. 1732-1799</span></td>
+    <td><b>George Washington</b><br><span style="font-size: 85%;">b. 1732-1799
+    </span></td>
     <td>1789-1797</td>
     <td>None</td>
     <td>1788 1792</td>
@@ -75,7 +75,8 @@ def test_scrape_presidents(mock_get):
 @patch("scraper.requests.get")
 def test_scrape_presidents_with_invalid_html(mock_get):
     mock_get.return_value.status_code = 200
-    mock_get.return_value.text = "<html><body><p>No table here!</p></body></html>"
+    mock_get.return_value.text = "<html><body><p>No table here!</p></body>"
+    "</html>"
 
     presidents = scraper.scrape_presidents()
     assert presidents == []  # Should return empty list gracefully

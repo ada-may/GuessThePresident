@@ -15,9 +15,6 @@ def get_events(year):
         return None
 
 
-
-
-
 def get_events_for_term(term):
     """Gets all events for years between the start and end of a term."""
     start_year, end_year = extract_years(term)
