@@ -4,28 +4,16 @@ from openai import AzureOpenAI
 import pandas as pd
 
 
-def extract_years(term):
-    """Extracts the start and end year from a term string."""
-    try:
-        start_date, end_date = term.split(" - ")
-        start_year = parser.parse(start_date).year
-
-        # If the end date is "Incumbent", set it to 2026
-        if end_date.strip() == "Incumbent":
-            end_year = 2026
-        else:
-            end_year = parser.parse(end_date).year
-
-        return start_year, end_year
-    except ValueError as e:
-        print(f"Error parsing term '{term}': {e}")
-        return None, None
-
-
-def parse_term_dates(term):
-    start_str, end_str = term.split(" - ")
-    start = parser.parse(start_str)
-    end = parser.parse(end_str if end_str != "Incumbent" else "2026-01-01")
+def parse_term_dates(term, just_years=False):
+    start_str, end_str = term.split("-")
+    start = parser.parse(start_str.strip())
+    # Handle the "Incumbent" case separately
+    if "Incumbent" in end_str.strip():
+        end = parser.parse("2026-01-01")  # Placeholder date for ongoing term
+    else:
+        end = parser.parse(end_str.strip())
+    if just_years:
+        return start.year, end.year
     return start, end
 
 
@@ -63,7 +51,7 @@ def display_chatbot(president_name):
 def calculate_durations(df):
     durations = []
     for _, row in df.iterrows():
-        start, end = extract_years(row["term"])
+        start, end = parse_term_dates(row["term"], True)
         if start and end:
             durations.append({
                 "Name": row["name"],
