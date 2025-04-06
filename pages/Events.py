@@ -2,6 +2,7 @@ import streamlit as st
 import database
 from api import get_events_for_president
 import pandas as pd
+import utils
 
 selected_president = st.selectbox(
     "Select a President:", database.fetch_president_names(),
@@ -45,3 +46,5 @@ if selected_president:
                     st.warning("No events found for this term.")
         else:
             st.warning("No terms found for this president.")
+
+    utils.display_chatbot(selected_president)
