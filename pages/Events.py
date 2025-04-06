@@ -4,6 +4,17 @@ from api import get_events_for_president
 import pandas as pd
 import utils
 
+
+def build_events_dataframe(terms):
+    events_list = []
+    for term_data in terms:
+        term_events = term_data.get("events", {})
+        for year, events in term_events.items():
+            for event in events:
+                events_list.append({"Year": year, "Event": event})
+    return pd.DataFrame(events_list)
+
+
 selected_president = st.selectbox(
     "Select a President:", database.fetch_president_names(),
     placeholder="Choose a president")
@@ -21,29 +32,17 @@ if selected_president:
 
         if terms:
             for term_data in terms:
-                st.write("---")
                 st.write(
                     f"**Number:** {term_data.get('number', 'Unknown')}")
                 st.write(f"**Term:** {term_data.get('term', 'Unknown')}")
 
-                # Convert event data to DataFrame and display
-                events_dict = term_data.get("events", {})
+            df_events = build_events_dataframe(terms)
 
-                if events_dict:
-                    events_list = []
-                    for year, events in events_dict.items():
-                        if events:
-                            for event in events:
-                                events_list.append(
-                                    {"Year": year, "Event": event})
+            if not df_events.empty:
+                st.dataframe(df_events)
 
-                    if events_list:
-                        df_events = pd.DataFrame(events_list)
-                        st.dataframe(df_events)
-                    else:
-                        st.warning("No events found for this term.")
-                else:
-                    st.warning("No events found for this term.")
+            else:
+                st.warning("No events found for this term.")
         else:
             st.warning("No terms found for this president.")
 

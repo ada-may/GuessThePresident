@@ -37,10 +37,8 @@ party_counts = df.groupby("party").size().reset_index(name="count")
 pie_chart = alt.Chart(party_counts).mark_arc(innerRadius=50).encode(
     theta=alt.Theta(field="count", type="quantitative"),
     color=alt.Color(field="party", type="nominal",
-                    legend=alt.Legend(title="party")),
+                    legend=alt.Legend(title="Party")),
     tooltip=["party", "count"]
-).properties(
-    title="Distribution of U.S. Presidents by Political Party"
 )
 
 # Show in Streamlit
