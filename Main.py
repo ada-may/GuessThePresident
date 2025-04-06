@@ -1,4 +1,5 @@
-from api import scrape_presidents
+
+from scraper import scrape_presidents
 import database
 import utils
 import streamlit as st
@@ -13,8 +14,6 @@ def main():
         database.insert_president(president)  # Store in DB
 
     st.title("U.S. Presidents Trivia")
-
-    utils.display_side_bar()
 
     if st.button("Learn about the Presidents"):
         database.create_table()
