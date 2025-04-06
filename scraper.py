@@ -13,7 +13,7 @@ def clean_text(text):
         "\u2013", "-")  # Normalize spaces and dashes
     text = re.sub(r'\s+', ' ', text).strip()  # Collapse multiple spaces
     text = re.sub(r'\(.*?\)', '', text)  # Remove text inside parentheses
-    return text or "N/A"
+    return text.strip() or "N/A"
 
 
 def clean_vice_president(vp_text):
@@ -115,4 +115,3 @@ def scrape_presidents():
             continue
 
     return presidents
-
