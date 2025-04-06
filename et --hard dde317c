@@ -1,0 +1,21 @@
+[33mf4da25a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m took out api key
+[33mf4294fc[m fixed api key for ai
+[33m3c8750a[m got timeline working
+[33mdde317c[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m cleaned up and rearranged files
+[33m25ebed8[m trying to make a sidebar of tabs
+[33mb4e6a2a[m added charts and game and gbt
+[33m15d86b7[m fixed up api and database and streamlit
+[33m0333e59[m changed api
+[33m0598297[m added methods to database
+[33m295a2e7[m started database.py
+[33m80306b4[m got api formatting correct
+[33m0a44eee[m started working on api
+[33mde4f4f9[m worked out all flake8 and birth_death issues
+[33m67098af[m trying to deal with flake8
+[33m76adebf[m fixed up cleaning methods
+[33mfae14ef[m switched the interpreter
+[33m22809d8[m did scraper
+[33m130750d[m made files
+[33m4498f96[m Create requirements.txt
+[33mca8c0dc[m Update README.md
+[33maa6e8a7[m Initial commit
