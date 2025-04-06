@@ -29,7 +29,7 @@ def extract_birth_death(tag):
 
     text = tag.get_text(strip=True)
     # Match birth and death year
-    match = re.search(r'(b\.)?\s*(\d{4})\s*[-]?\s*(\d{4})?', text)
+    match = re.search(r'(b\.)?\s*(\d{4})\s*[\u2013-]?\s*(\d{4})?', text)
     if match:
         birth_year = match.group(2)
         death_year = match.group(3)
@@ -115,3 +115,4 @@ def scrape_presidents():
             continue
 
     return presidents
+

@@ -14,11 +14,15 @@ if "incorrect_count" not in st.session_state:
 if "answer" not in st.session_state:
     st.session_state.answer = {}
 
+if "hint" not in st.session_state:
+    st.session_state.hint = None
+
 
 def load_new_question():
     result = database.fetch_random_president()
     if result:
-        correct_name, picture_url = result
+        correct_name, picture_url, hint, hint_column = result[
+            "name"], result["picture"], result["hint"], result["hint_column"]
         wrong_names = database.fetch_wrong_presidents(correct_name)
         options = wrong_names + [correct_name]
         random.shuffle(options)
@@ -27,14 +31,22 @@ def load_new_question():
             "picture": picture_url,
             "choices": options,
             "guessed": False,
-            "feedback": None
+            "feedback": None,
+            "hint": hint,
+            "hint_column": hint_column
         }
+        st.session_state.hint = hint
+
+
+def show_hint():
+    if st.session_state.hint:
+        st.write(
+            f"**Hint** {st.session_state.answer['hint_column']}: {st.session_state.hint}")
+    else:
+        st.warning("No hint available")
 
 
 # Try another button
-if st.button("Try Another"):
-    load_new_question()
-    st.rerun()
 
 
 if "answer" not in st.session_state or not st.session_state.answer:
@@ -44,8 +56,16 @@ if "answer" not in st.session_state or not st.session_state.answer:
 answer_data = st.session_state.answer
 st.image(st.session_state.answer["picture"], width=300)
 
+if st.button("Get a Hint"):
+    show_hint()
+
+if st.button("Try Another"):
+    load_new_question()
+    st.rerun()
+
 st.write("Your score:")
-st.write(f"Correct: {st.session_state.correct_count} | Incorrect: {st.session_state.incorrect_count}")
+st.write(
+    f"Correct: {st.session_state.correct_count} | Incorrect: {st.session_state.incorrect_count}")
 options_with_placeholder = ["Select an option"] + answer_data["choices"]
 user_guess = st.radio("Who is this President?",
                       options_with_placeholder, index=0, key="guess_radio")
