@@ -41,7 +41,8 @@ def load_new_question():
 def show_hint():
     if st.session_state.hint:
         st.write(
-            f"**Hint** {st.session_state.answer['hint_column']}: {st.session_state.hint}")
+            f"**Hint** {st.session_state.answer['hint_column']}:"
+            f" {st.session_state.hint}")
     else:
         st.warning("No hint available")
 
@@ -65,7 +66,8 @@ if st.button("Try Another"):
 
 st.write("Your score:")
 st.write(
-    f"Correct: {st.session_state.correct_count} | Incorrect: {st.session_state.incorrect_count}")
+    f"Correct: {st.session_state.correct_count} "
+    f"| Incorrect: {st.session_state.incorrect_count}")
 options_with_placeholder = ["Select an option"] + answer_data["choices"]
 user_guess = st.radio("Who is this President?",
                       options_with_placeholder, index=0, key="guess_radio")
@@ -81,7 +83,8 @@ if not answer_data["guessed"]:
             st.session_state.correct_count += 1
         else:
             answer_data["feedback"] = (
-                "error", f"Incorrect. The correct answer was {answer_data['name']}.")
+                "error", f"Incorrect. The correct answer "
+                f"was {answer_data['name']}.")
             answer_data["guessed"] = True
             st.session_state.incorrect_count += 1
         st.rerun()

@@ -47,7 +47,6 @@ def fetch_all_presidents():
     return df.drop(columns=["Picture"])
 
 
-
 def fetch_president_names():
     """Fetch a president by their name."""
     conn = sqlite3.connect(DATABASE_NAME)
@@ -88,7 +87,9 @@ def fetch_random_president():
 
     # Select all relevant columns for hint purposes
     cursor.execute(
-        "SELECT name, picture, birth_death AS [Birth/Death], term, party, election as [Election Date], vice_president as [Vice President] FROM presidents")
+        "SELECT name, picture, birth_death AS [Birth/Death], term, party,"
+        " election as [Election Date], vice_president as [Vice President] "
+        "FROM presidents")
     presidents = cursor.fetchall()
     conn.close()
 
@@ -96,7 +97,7 @@ def fetch_random_president():
         # Randomly pick a president
         president = random.choice(presidents)
 
-        # Randomly choose a hint column (exclude 'name' and 'picture' from the hint pool)
+        # Randomly choose a hint column
         hint_columns = ['Birth/Death', 'term', 'party',
                         'Election Date', 'Vice President']
         hint_column = random.choice(hint_columns)
@@ -107,7 +108,7 @@ def fetch_random_president():
             'picture': president[1],
             # Offset by 2 because the first two are name and picture
             'hint': president[hint_columns.index(hint_column) + 2],
-            'hint_column': hint_column  # To indicate which column the hint is from
+            'hint_column': hint_column  # which column the hint is from
         }
 
         return president_info
