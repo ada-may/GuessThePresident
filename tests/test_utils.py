@@ -1,4 +1,3 @@
-import pytest
 from unittest.mock import patch
 import pandas as pd
 from utils import parse_term_dates, calculate_durations
@@ -11,7 +10,7 @@ def test_parse_term_dates_with_years_only():
     assert end_year == 2024
 
 
-def test_parse_term_dates_with_inccumbent():
+def test_parse_term_dates_with_incumbent():
     term = "2020-Incumbent"
     start_year, end_year = parse_term_dates(term, just_years=True)
     assert start_year == 2020
@@ -25,11 +24,11 @@ def test_parse_term_dates_without_just_years():
     assert end.year == 2024
 
 
-def test_parse_term_dates_with_inccumbent_full_date():
+def test_parse_term_dates_with_incumbent_full_date():
     term = "2020-Incumbent"
     start, end = parse_term_dates(term, just_years=False)
     assert start.year == 2020
-    assert end.year == 2026  # Assuming the end date is set to 2026 for "Incumbent"
+    assert end.year == 2026
 
 
 def test_parse_term_dates_with_full_date_range():
@@ -59,7 +58,6 @@ def test_parse_term_dates_with_incumbent():
     start, end = parse_term_dates(term, just_years=True)
     assert start == 2021
     assert end == 2026  # Assuming the end year is set to 2026 for "Incumbent"
-  
 
 
 def test_parse_term_dates_with_only_years():
@@ -67,8 +65,6 @@ def test_parse_term_dates_with_only_years():
     start_year, end_year = parse_term_dates(term, just_years=True)
     assert start_year == 1913
     assert end_year == 1921
-
-
 
 
 def test_calculate_durations():
@@ -80,7 +76,8 @@ def test_calculate_durations():
     df = pd.DataFrame(data)
 
     # Mock parse_term_dates to return predefined start and end years
-    with patch("utils.parse_term_dates", side_effect=lambda term, just_years: (int(term.split("-")[0]), int(term.split("-")[1]))):
+    with patch("utils.parse_term_dates", side_effect=lambda term, just_years:
+               (int(term.split("-")[0]), int(term.split("-")[1]))):
         result_df = calculate_durations(df)
 
     # Check if the result has the correct structure (3 rows, 4 columns)

@@ -5,6 +5,7 @@ import streamlit as st
 
 
 def main():
+    database.reset_database()
     database.create_table()  # Ensure table exists
 
     presidents = scrape_presidents()  # Get president data
