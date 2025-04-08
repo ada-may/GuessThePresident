@@ -17,7 +17,8 @@ def main():
 
     if st.button("Learn about the Presidents"):
         database.create_table()
-        st.dataframe(database.fetch_all_presidents())
+        st.dataframe(database.fetch_all_presidents(),
+                     use_container_width=True, height=1680)
 
 
 if __name__ == "__main__":

@@ -39,7 +39,7 @@ if selected_president:
             df_events = build_events_dataframe(terms)
 
             if not df_events.empty:
-                st.dataframe(df_events)
+                st.dataframe(df_events, use_container_width=True, height=1000)
 
             else:
                 st.warning("No events found for this term.")
