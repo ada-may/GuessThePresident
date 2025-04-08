@@ -47,12 +47,13 @@ def submit_guess(user_guess):
     elif user_guess == answer_data["name"]:
         answer_data["feedback"] = ("success", "Correct!")
         st.session_state.correct_count += 1
+        answer_data["guessed"] = True
     else:
         answer_data["feedback"] = (
-            "error", f"Incorrect. The correct answer was {answer_data['name']}.")
+            "error", "Incorrect. The correct answer was"
+            f" {answer_data['name']}.")
         st.session_state.incorrect_count += 1
-    answer_data["guessed"] = True
-    st.rerun()
+        answer_data["guessed"] = True
 
 
 def display_feedback():
