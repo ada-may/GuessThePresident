@@ -6,8 +6,8 @@ from scraper import scrape_presidents
 
 
 def prepare_duartion_data(df):
+    # add a column for how long each president served, grouped into bins
     duration_df = utils.calculate_durations(df)
-
     bins = [0, 4, 8, 12]
     labels = ["1-4", "5-8", "9-12"]
 
@@ -22,6 +22,7 @@ def prepare_duartion_data(df):
 
 
 def get_binned_counts(duration_df):
+    # count number of presidents in each duration group
     binned_counts = duration_df["Years Served Group"].value_counts(
     ).sort_index().reset_index()
     binned_counts.columns = ["Years Served Group", "Number of Presidents"]
@@ -29,6 +30,7 @@ def get_binned_counts(duration_df):
 
 
 def plot_years_served_chart(binned_counts):
+    # create bar chart of presidents by years served
     return alt.Chart(binned_counts).mark_bar().encode(
         x=alt.X("Years Served Group", title="Years Served"),
         y=alt.Y("Number of Presidents", title="Number of Presidents"),
@@ -37,10 +39,12 @@ def plot_years_served_chart(binned_counts):
 
 
 def get_party_counts(df):
+    # count presidents by political party
     return df.groupby("party").size().reset_index(name="count")
 
 
 def plot_party_pie_chart(party_counts):
+    # create pie chart of party distribution
     return alt.Chart(party_counts).mark_arc().encode(
         theta=alt.Theta(field="count", type="quantitative"),
         color=alt.Color(field="party", type="nominal",
@@ -50,6 +54,7 @@ def plot_party_pie_chart(party_counts):
 
 
 def parse_term_dates(df):
+    # parse term string into separate start and end dates
     df[["Start", "End"]] = df["term"].apply(
         lambda t: pd.Series(utils.parse_term_dates(t)))
     df["Start"] = pd.to_datetime(df["Start"])
@@ -58,6 +63,7 @@ def parse_term_dates(df):
 
 
 def plot_timeline(df):
+    # create horizontal bar timeline of presidental terms
     return alt.Chart(df).mark_bar().encode(
         y=alt.Y("name:N", sort="-x", title=None, axis=None),
         x=alt.X("Start:T", title="Start of Term"),
@@ -66,6 +72,7 @@ def plot_timeline(df):
     ).properties(height=200)
 
 
+# scrape data and show charts in Streamlit app
 df = pd.DataFrame(scrape_presidents())
 
 st.subheader("Presidents by Years Served")
