@@ -19,21 +19,19 @@ def setup_database():
 
 
 def test_create_table():
-    """Test if the table is created successfully."""
     conn = sqlite3.connect(database.DATABASE_NAME)
     cursor = conn.cursor()
     cursor.execute("PRAGMA table_info(presidents)")
     columns = [column[1] for column in cursor.fetchall()]
     conn.close()
-
     expected_columns = [
-        "number", "picture", "name", "birth_death", "term", "party", "election", "vice_president"
+        "number", "picture", "name", "birth_death", "term", "party",
+        "election", "vice_president"
     ]
     assert columns == expected_columns
 
 
 def test_insert_president():
-    """Test inserting a president into the table."""
     president = {
         "number": 1,
         "picture": "image_url",
@@ -45,21 +43,17 @@ def test_insert_president():
         "vice_president": "John Adams"
     }
     database.insert_president(president)
-
-    # Verify if the president was inserted
     conn = sqlite3.connect(database.DATABASE_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM presidents WHERE name = ?",
                    ("George Washington",))
     result = cursor.fetchone()
     conn.close()
-
     assert result is not None
     assert result[0] == "George Washington"
 
 
 def test_fetch_all_presidents():
-    """Test fetching all presidents."""
     president = {
         "number": 2,
         "picture": "image_url",
@@ -72,15 +66,13 @@ def test_fetch_all_presidents():
     }
     database.insert_president(president)
     df = database.fetch_all_presidents()
-
     assert isinstance(df, pd.DataFrame)
     assert "Number" in df.columns
     assert "Name" in df.columns
-    assert len(df) > 0  # There should be at least one row
+    assert len(df) > 0
 
 
 def test_fetch_president_names():
-    """Test fetching president names."""
     president = {
         "number": 3,
         "picture": "image_url",
@@ -93,14 +85,12 @@ def test_fetch_president_names():
     }
     database.insert_president(president)
     result = database.fetch_president_names()
-
     assert "Thomas Jefferson" in result
     assert isinstance(result, list)
     assert len(result) > 0
 
 
 def test_fetch_random_president():
-    """Test fetching a random president."""
     president = {
         "number": 4,
         "picture": "image_url",
@@ -113,7 +103,6 @@ def test_fetch_random_president():
     }
     database.insert_president(president)
     result = database.fetch_random_president()
-
     assert result is not None
     assert "name" in result
     assert "hint" in result
@@ -121,7 +110,6 @@ def test_fetch_random_president():
 
 
 def test_fetch_wrong_presidents():
-    """Test fetching wrong president names."""
     correct_president = {
         "number": 5,
         "picture": "image_url",
@@ -155,9 +143,7 @@ def test_fetch_wrong_presidents():
     database.insert_president(correct_president)
     database.insert_president(wrong_president_1)
     database.insert_president(wrong_president_2)
-
     wrong_names = database.fetch_wrong_presidents("James Monroe", count=2)
-
     assert isinstance(wrong_names, list)
     assert len(wrong_names) == 2
     assert "James Monroe" not in wrong_names
@@ -175,22 +161,18 @@ def test_fetch_wrong_presidents():
      "John Quincy Adams"),
 ])
 def test_insert_president_parametrized(president, expected_name):
-    """Test inserting a president using parameterized test."""
     database.insert_president(president)
-
     conn = sqlite3.connect(database.DATABASE_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM presidents WHERE name = ?",
                    (president["name"],))
     result = cursor.fetchone()
     conn.close()
-
     assert result is not None
     assert result[0] == expected_name
 
 
 def count_records_in_presidents():
-    """Helper function to count records in the 'presidents' table."""
     conn = sqlite3.connect(database.DATABASE_NAME)
     cursor = conn.cursor()
     cursor.execute("SELECT COUNT(*) FROM presidents")
@@ -200,8 +182,6 @@ def count_records_in_presidents():
 
 
 def test_reset_database_when_table_exists():
-    """Test resetting the database when the 'presidents' table exists."""
-    # Before reset, there should be some records
     president = {
         "number": 1,
         "picture": "image_url",
@@ -213,48 +193,38 @@ def test_reset_database_when_table_exists():
         "vice_president": "John Adams"
     }
     database.insert_president(president)
-
     assert count_records_in_presidents() > 0
-
-    # Call reset_database
     database.reset_database()
-
-    # After reset, there should be no records in the 'presidents' table
     assert count_records_in_presidents() == 0
 
 
 def test_reset_database_when_table_does_not_exist():
-    """Test resetting the database when the 'presidents' table does not exist."""
-    # Drop the table if it exists
     conn = sqlite3.connect(database.DATABASE_NAME)
     cursor = conn.cursor()
     cursor.execute("DROP TABLE IF EXISTS presidents")
     conn.commit()
     conn.close()
-
-    # Table should not exist before reset
     conn = sqlite3.connect(database.DATABASE_NAME)
     cursor = conn.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='presidents'")
+    cursor.execute(
+        "SELECT name FROM sqlite_master WHERE "
+        "type='table' AND name='presidents'")
     table_exists = cursor.fetchone()
     conn.close()
-
-    assert table_exists is None  # Table should not exist
-
-    # Call reset_database and verify the table is created and empty
+    assert table_exists is None
     database.reset_database()
     conn = sqlite3.connect(database.DATABASE_NAME)
     cursor = conn.cursor()
-    cursor.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='presidents'")
+    cursor.execute(
+        "SELECT name FROM sqlite_master WHERE"
+        " type='table' AND name='presidents'")
     table_exists = cursor.fetchone()
     conn.close()
-    assert table_exists is not None  # Table should exist now
+    assert table_exists is not None
     assert count_records_in_presidents() == 0
 
 
 def test_empty_database_after_reset():
-    """Test if the database is empty after calling reset_database."""
-    # Before reset, there should be records
     president = {
         "number": 1,
         "picture": "image_url",
@@ -267,9 +237,5 @@ def test_empty_database_after_reset():
     }
     database.insert_president(president)
     assert count_records_in_presidents() > 0
-
-    # Call reset_database
     database.reset_database()
-
-    # After reset, the database should be empty
     assert count_records_in_presidents() == 0

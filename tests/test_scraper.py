@@ -21,7 +21,6 @@ def test_extract_birth_death():
     html = '<span style="font-size: 85%;">b. 1732-1799</span>'
     tag = BeautifulSoup(html, "html.parser").span
     assert scraper.extract_birth_death(tag) == "1732 - 1799"
-
     html = '<span style="font-size: 85%;">b. 1961</span>'
     tag = BeautifulSoup(html, "html.parser").span
     assert scraper.extract_birth_death(tag) == "born in 1961"
@@ -60,7 +59,6 @@ SAMPLE_HTML = """
 def test_scrape_presidents(mock_get):
     mock_get.return_value.status_code = 200
     mock_get.return_value.text = SAMPLE_HTML
-
     result = scraper.scrape_presidents()
     assert isinstance(result, list)
     assert len(result) == 1
@@ -77,9 +75,8 @@ def test_scrape_presidents_with_invalid_html(mock_get):
     mock_get.return_value.status_code = 200
     mock_get.return_value.text = "<html><body><p>No table here!</p></body>"
     "</html>"
-
     presidents = scraper.scrape_presidents()
-    assert presidents == []  # Should return empty list gracefully
+    assert presidents == []
 
 
 MISSING_COLUMNS_HTML = """
@@ -94,6 +91,5 @@ MISSING_COLUMNS_HTML = """
 def test_scrape_presidents_missing_columns(mock_get):
     mock_get.return_value.status_code = 200
     mock_get.return_value.text = MISSING_COLUMNS_HTML
-
     presidents = scraper.scrape_presidents()
-    assert presidents == []  # Should skip incomplete rows
+    assert presidents == []

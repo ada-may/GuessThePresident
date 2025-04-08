@@ -11,10 +11,10 @@ def test_parse_term_dates_with_years_only():
 
 
 def test_parse_term_dates_with_incumbent():
-    term = "2020-Incumbent"
-    start_year, end_year = parse_term_dates(term, just_years=True)
-    assert start_year == 2020
-    assert end_year == 2026  # Assuming the end year is the next year
+    term = "January 20, 2021 - Incumbent"
+    start, end = parse_term_dates(term, just_years=True)
+    assert start == 2021
+    assert end == 2026
 
 
 def test_parse_term_dates_without_just_years():
@@ -51,13 +51,6 @@ def test_parse_term_dates_with_different_months():
     assert end.month == 8  # August
     assert start.day == 4  # Start day is 4
     assert end.day == 2  # End day is 2
-
-
-def test_parse_term_dates_with_incumbent():
-    term = "January 20, 2021 - Incumbent"
-    start, end = parse_term_dates(term, just_years=True)
-    assert start == 2021
-    assert end == 2026  # Assuming the end year is set to 2026 for "Incumbent"
 
 
 def test_parse_term_dates_with_only_years():
