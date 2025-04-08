@@ -3,19 +3,12 @@ import random
 import database
 import utils
 
-st.title("Guess the President")
 
-if "correct_count" not in st.session_state:
-    st.session_state.correct_count = 0
-
-if "incorrect_count" not in st.session_state:
-    st.session_state.incorrect_count = 0
-
-if "answer" not in st.session_state:
-    st.session_state.answer = {}
-
-if "hint" not in st.session_state:
-    st.session_state.hint = None
+def initialize_session_state():
+    st.session_state.setdefault("correct_count", 0)
+    st.session_state.setdefault("incorrect_count", 0)
+    st.session_state.setdefault("answer", {})
+    st.session_state.setdefault("hint", None)
 
 
 def load_new_question():
@@ -47,12 +40,36 @@ def show_hint():
         st.warning("No hint available")
 
 
-# Try another button
+def submit_guess(user_guess):
+    answer_data = st.session_state.answer
+    if user_guess == "Select an option":
+        st.warning("Please select a president")
+    elif user_guess == answer_data["name"]:
+        answer_data["feedback"] = ("success", "Correct!")
+        st.session_state.correct_count += 1
+    else:
+        answer_data["feedback"] = (
+            "error", f"Incorrect. The correct answer was {answer_data['name']}.")
+        st.session_state.incorrect_count += 1
+    answer_data["guessed"] = True
+    st.rerun()
 
 
-if "answer" not in st.session_state or not st.session_state.answer:
+def display_feedback():
+    feedback = st.session_state.answer.get("feedback")
+    if feedback:
+        msg_type, msg_text = feedback
+        if msg_type == "success":
+            st.success(msg_text)
+        else:
+            st.error(msg_text)
+
+
+st.title("Guess the President")
+initialize_session_state()
+
+if not st.session_state.answer:
     load_new_question()
-
 
 answer_data = st.session_state.answer
 st.image(st.session_state.answer["picture"], width=300)
@@ -73,28 +90,9 @@ user_guess = st.radio("Who is this President?",
                       options_with_placeholder, index=0, key="guess_radio")
 
 
-if not answer_data["guessed"]:
-    if st.button("Submit Guess"):
-        if user_guess == "Select an option":
-            st.warning("Please select a president")
-        elif user_guess == answer_data["name"]:
-            answer_data["feedback"] = ("success", "Correct!")
-            answer_data["guessed"] = True
-            st.session_state.correct_count += 1
-        else:
-            answer_data["feedback"] = (
-                "error", f"Incorrect. The correct answer "
-                f"was {answer_data['name']}.")
-            answer_data["guessed"] = True
-            st.session_state.incorrect_count += 1
-        st.rerun()
+if not answer_data["guessed"] and st.button("Submit Guess"):
+    submit_guess(user_guess)
 
-if answer_data.get("guessed") and answer_data.get("feedback"):
-    msg_type, msg_text = answer_data["feedback"]
-    if msg_type == "success":
-        st.success(msg_text)
-    else:
-        st.error(msg_text)
-
-    # Chatbot or extra info after guessing
+if answer_data.get("guessed"):
+    display_feedback()
     utils.display_chatbot(answer_data["name"])

@@ -118,8 +118,8 @@ def fetch_random_president():
         president_info = {
             'name': president[0],
             'picture': president[1],
-            # Offset by 1 because the first is name
-            'hint': president[hint_columns.index(hint_column) + 1],
+            # Offset by 2 because of name and pic
+            'hint': president[hint_columns.index(hint_column) + 2],
             'hint_column': hint_column  # which column the hint is from
         }
 
