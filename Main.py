@@ -16,7 +16,6 @@ def main():
     st.title("U.S. Presidents Trivia")
 
     if st.button("Learn about the Presidents"):
-        database.create_table()
         st.dataframe(database.fetch_all_presidents(),
                      use_container_width=True, height=1680)
 
