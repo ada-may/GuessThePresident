@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from unittest.mock import patch
 
 
-@pytest.mark.parametrize("input_text,expected", [
+@pytest.mark.parametrize("input_text, expected", [
     ("George Washington [1] (President)", "George Washington"),
     ("  Multiple   spaces ", "Multiple spaces"),
     ("Jefferson\u00a0\u20131809", "Jefferson -1809")
