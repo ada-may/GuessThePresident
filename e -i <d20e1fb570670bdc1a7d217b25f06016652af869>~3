@@ -1,0 +1,245 @@
+[33mcommit 6c7de006217a11b6a96b1614aee36becd303185a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Wed Apr 9 22:13:51 2025 +0000
+
+    made ai a secret
+
+[33mcommit be170ff72b17dad775bad924096a74d40a10df05[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Wed Apr 9 22:13:51 2025 +0000
+
+    Remove secrets from git history
+
+[33mcommit d20e1fb570670bdc1a7d217b25f06016652af869[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Wed Apr 9 22:13:51 2025 +0000
+
+    made ai a secret
+
+[33mcommit 58bd47d88153e771669858874de24ddda77b42c2[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Wed Apr 9 21:41:54 2025 +0000
+
+    changed flake8 requirements
+
+[33mcommit 62a161d95d79a76a139c33fd90bfb5897c8e5a40[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Wed Apr 9 20:23:33 2025 +0000
+
+    added a space
+
+[33mcommit c958270a671672f684cb815859ecdad53c9092dd[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 8 16:43:19 2025 +0000
+
+    finished comments
+
+[33mcommit 2d0f6b50599c716e2bec7ddfe58a0315c5b3c358[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 8 02:47:06 2025 +0000
+
+    condensed main
+
+[33mcommit e76523ee2c185bf6372372a0cd00fe575dfb9901[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 8 01:44:29 2025 +0000
+
+    fixed up game
+
+[33mcommit cec170a4fc3ba2e31176c8acb869c351a3987142[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 8 01:23:46 2025 +0000
+
+    broke down streamlit things to smaller functions
+
+[33mcommit cf82cf2dcb6b2115dc951667c395b22b338a3406[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 8 00:38:57 2025 +0000
+
+    adjusted dataframe size
+
+[33mcommit 5fe75976c596f98edf7ae3f4928a61ce22d1ac7e[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 8 00:24:46 2025 +0000
+
+    cleaned test
+
+[33mcommit f619a5df587254c3379e3df5ad4f6c9fce5d5e82[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 8 00:13:51 2025 +0000
+
+    did comments for utils
+
+[33mcommit 7ab92f96dd699a313d6233ed8826a442d35480ee[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Mon Apr 7 23:25:00 2025 +0000
+
+    worked on commenting, and made a reset database function
+
+[33mcommit 0b016e5db16d76a13bba7996c8961658c1c9663c[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 20:47:20 2025 +0000
+
+    broke events into smaller functions
+
+[33mcommit da700de38a6508e9a45fa142d2966f335c4365bd[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 20:14:40 2025 +0000
+
+    combined parse term dates and extract years. did more tests
+
+[33mcommit 03e51a8386fac97f1749e20c2f8cfbbfe281c349[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 18:13:57 2025 +0000
+
+    fixed to flake8
+
+[33mcommit d9f518240d991198db028ba1b8639371db0b9f66[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 18:01:34 2025 +0000
+
+    worked on file structure and started on test
+
+[33mcommit 58fb7147bf837e0e22efaabcdb2aa99e22a3caab[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 06:13:45 2025 +0000
+
+    deleted unnecessary files
+
+[33mcommit 0dceb8264037bbfdd362b538ed54623b89c37394[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 06:12:36 2025 +0000
+
+    cleaned up to keep to flake8
+
+[33mcommit 3a8bfeed908c87a70df3148516dbec83053fdd87[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 06:06:32 2025 +0000
+
+    added hint feature and fixed up birth/death in the database
+
+[33mcommit a05160f04e546278214807fa3ec9ad2fd7ffb346[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 05:19:58 2025 +0000
+
+    added gbt to events page
+
+[33mcommit 5f083f6e4d92175339b624d2f4e0cf8e35d134f8[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 05:16:53 2025 +0000
+
+    made space for api key
+
+[33mcommit 1a09fe0eb28ba3cb534d07b523e4198f9ca30290[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 05:12:35 2025 +0000
+
+    trying to commit
+
+[33mcommit dde317c9e6267e319dc5e103efbb36488f973fda[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Apr 6 02:42:15 2025 +0000
+
+    cleaned up and rearranged files
+
+[33mcommit 25ebed8782edd811530ea57e2f13d094a976e048[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Fri Apr 4 22:33:43 2025 +0000
+
+    trying to make a sidebar of tabs
+
+[33mcommit b4e6a2aac6bb23c4b63519896d529548ae81d255[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Fri Apr 4 21:28:52 2025 +0000
+
+    added charts and game and gbt
+
+[33mcommit 15d86b757cc210ff5bb1e6d5cd94146995a24768[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Fri Apr 4 03:20:53 2025 +0000
+
+    fixed up api and database and streamlit
+
+[33mcommit 0333e59ab099921e0e142e84c15b4bf5ae0af056[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Thu Apr 3 03:04:19 2025 +0000
+
+    changed api
+
+[33mcommit 059829761046cb4cdd3bc4c089ce4ca7093d1413[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Wed Apr 2 00:56:36 2025 +0000
+
+    added methods to database
+
+[33mcommit 295a2e75fb4417d4d58865dec91635fe9d18c959[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Wed Apr 2 00:47:46 2025 +0000
+
+    started database.py
+
+[33mcommit 80306b4988d8593b94870e37b04da87d05d8e9e9[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 1 20:44:44 2025 +0000
+
+    got api formatting correct
+
+[33mcommit 0a44eee16ed3e7d9a1ce2105e289403c15d3a61f[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 1 20:20:50 2025 +0000
+
+    started working on api
+
+[33mcommit de4f4f9788467f36c871dcf76528a63f08e27b08[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 1 19:05:45 2025 +0000
+
+    worked out all flake8 and birth_death issues
+
+[33mcommit 67098af95bfa97f883351bdb3c6d97048108edc8[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 1 17:53:01 2025 +0000
+
+    trying to deal with flake8
+
+[33mcommit 76adebf2434be9f92da4d9bc429d48fcd66c1382[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Tue Apr 1 17:24:24 2025 +0000
+
+    fixed up cleaning methods
+
+[33mcommit fae14ef1bd73469f7ab4e42a70c697b330759154[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Mon Mar 31 21:45:31 2025 +0000
+
+    switched the interpreter
+
+[33mcommit 22809d875e416a705cefc461e9e200485072f3c1[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Mon Mar 31 20:45:57 2025 +0000
+
+    did scraper
+
+[33mcommit 130750ddcb14dfe91cdfc7e3cd794380bf729b07[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Mon Mar 31 15:44:43 2025 +0000
+
+    made files
+
+[33mcommit 4498f967c5e84dafcf083bed86f7f8415795be27[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Mar 30 19:34:07 2025 -0400
+
+    Create requirements.txt
+
+[33mcommit ca8c0dc82c3caea59d9d6bd4b7fa125f25357311[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Mar 30 19:32:47 2025 -0400
+
+    Update README.md
+
+[33mcommit aa6e8a7b306a9ec4dec3d3c09463517cb97e8eed[m
+Author: Ada May <adamay613@gmail.com>
+Date:   Sun Mar 30 19:32:26 2025 -0400
+
+    Initial commit
