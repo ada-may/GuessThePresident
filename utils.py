@@ -37,30 +37,23 @@ def display_chatbot(president_name):
     # output section label for chatbot messages
     st.write("Chatbot: ")
 
-    # text input in sidebar for the user to securely enter their API key
-    api_key = st.sidebar.text_input("Enter your OpenAI API key")
+    # if the user entered an API key, initialize the Azure OpenAI client
+    client = AzureOpenAI(
+        api_key=st.secrets["AZURE_OPENAI_API_KEY"],
+        azure_endpoint=st.secrets["AZURE_OPENAI_ENDPOINT"],
+        api_version="2024-02-15-preview"
+    )
 
-    if api_key:
-        # if the user entered an API key, initialize the Azure OpenAI client
-        client = AzureOpenAI(
-            api_key=api_key,
-            api_version="2024-02-15-preview",
-            azure_endpoint="https://streamlit-oai.openai.azure.com/"
+    # if go was pressed
+    if go_button:
+        stream = client.chat.completions.create(
+            model="gpt-35-turbo-16k",
+            messages=[{"role": "system", "content": "You are a friendly"
+                       " chatbot teaching about presidents"},
+                      {"role": "user", "content": user_input}],
+            stream=True,
         )
-
-        # if go was pressed
-        if go_button:
-            stream = client.chat.completions.create(
-                model="gpt-35-turbo-16k",
-                messages=[{"role": "system", "content": "You are a friendly"
-                           " chatbot teaching about presidents"},
-                          {"role": "user", "content": user_input}],
-                stream=True,
-            )
-            st.write_stream(stream)  # display the streamed response in the UI
-    else:
-        # show a warning if the user hasn't entered an API key yet
-        st.sidebar.warning("Please enter your OpenAI API key in the sidebar.")
+        st.write_stream(stream)  # display the streamed response in the UI
 
 
 def calculate_durations(df):

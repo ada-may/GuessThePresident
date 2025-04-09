@@ -127,7 +127,6 @@ def fetch_random_president():
     else:
         return None
 
-
 def fetch_wrong_presidents(correct_name, count=3):
     """Fetches a list of 3 wrong president names (not
     including the correct one)."""
