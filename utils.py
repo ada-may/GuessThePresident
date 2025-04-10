@@ -22,21 +22,8 @@ def parse_term_dates(term, just_years=False):
     return start, end  # return full dates
 
 
-def display_chatbot(president_name):
-    """Make a chatbot to get more information about a president"""
-
-    # input text box pre-filled witha a sample prompt about the
-    # specific president
-    user_input = st.text_area(
-        "Ask the chatbot to learn more",
-        f"I want to learn more about {president_name}.")
-
-    # button labeled "Go" that the user must click to send input to the chatbot
-    go_button = st.button("Go")
-
-    # output section label for chatbot messages
-    st.write("Chatbot: ")
-
+def display_chatbot(president_name, need_hint=False):
+    """Make a chatbot to get more information about a president or give a hint"""
     # if the user entered an API key, initialize the Azure OpenAI client
     client = AzureOpenAI(
         api_key=st.secrets["AZURE_OPENAI_API_KEY"],
@@ -44,16 +31,35 @@ def display_chatbot(president_name):
         api_version="2024-02-15-preview"
     )
 
-    # if go was pressed
-    if go_button:
+    if need_hint:
         stream = client.chat.completions.create(
             model="gpt-35-turbo-16k",
             messages=[{"role": "system", "content": "You are a friendly"
                        " chatbot teaching about presidents"},
-                      {"role": "user", "content": user_input}],
+                      {"role": "user", "content": f"give a hint about {president_name} without saying his name"}],
             stream=True,
         )
         st.write_stream(stream)  # display the streamed response in the UI
+    else:
+        # input text box pre-filled witha a sample prompt about the
+        # specific president
+        user_input = st.text_area(
+            "Ask the chatbot to learn more",
+            f"I want to learn more about {president_name}.")
+
+        # button labeled "Go" that the user must click to send input to the chatbot
+        go_button = st.button("Go")
+
+        # if go was pressed
+        if go_button:
+            stream = client.chat.completions.create(
+                model="gpt-35-turbo-16k",
+                messages=[{"role": "system", "content": "You are a friendly"
+                           " chatbot teaching about presidents"},
+                          {"role": "user", "content": user_input}],
+                stream=True,
+            )
+            st.write_stream(stream)  # display the streamed response in the UI
 
 
 def calculate_durations(df):

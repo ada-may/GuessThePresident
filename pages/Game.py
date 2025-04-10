@@ -89,6 +89,9 @@ st.image(st.session_state.answer["picture"], width=300)
 if st.button("Get a Hint"):
     show_hint()
 
+if st.button("I want an AI generated hint"):
+    utils.display_chatbot(answer_data["name"], True)
+
 # try another button
 if st.button("Try Another"):
     load_new_question()
