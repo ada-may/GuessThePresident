@@ -10,6 +10,7 @@ def initialize_session_state():
     st.session_state.setdefault("incorrect_count", 0)
     st.session_state.setdefault("answer", {})
     st.session_state.setdefault("hint", None)
+    st.session_state.setdefault("show_ai_hint", False)
 
 
 def load_new_question():
@@ -32,6 +33,7 @@ def load_new_question():
             "hint_column": hint_column
         }
         st.session_state.hint = hint
+        st.session_state.show_ai_hint = False
 
 
 def show_hint():
@@ -90,6 +92,9 @@ if st.button("Get a Hint"):
     show_hint()
 
 if st.button("I want an AI generated hint"):
+    st.session_state.show_ai_hint = True
+
+if st.session_state.get("show_ai_hint"):
     utils.display_chatbot(answer_data["name"], True)
 
 # try another button

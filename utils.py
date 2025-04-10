@@ -31,35 +31,30 @@ def display_chatbot(president_name, need_hint=False):
         api_version="2024-02-15-preview"
     )
 
+    # decide the user prompt based on hint mode
     if need_hint:
-        stream = client.chat.completions.create(
-            model="gpt-35-turbo-16k",
-            messages=[{"role": "system", "content": "You are a friendly"
-                       " chatbot teaching about presidents"},
-                      {"role": "user", "content": f"give a hint about {president_name} without saying his name"}],
-            stream=True,
-        )
-        st.write_stream(stream)  # display the streamed response in the UI
+        prompt = f"Give a hint about {president_name} without saying his name"
+        run_chat = True
     else:
-        # input text box pre-filled witha a sample prompt about the
-        # specific president
-        user_input = st.text_area(
+        # input text box pre-filled witha a sample prompt about the specific president
+        prompt = st.text_area(
             "Ask the chatbot to learn more",
             f"I want to learn more about {president_name}.")
 
         # button labeled "Go" that the user must click to send input to the chatbot
-        go_button = st.button("Go")
+        run_chat = st.button("Go")
 
-        # if go was pressed
-        if go_button:
-            stream = client.chat.completions.create(
-                model="gpt-35-turbo-16k",
-                messages=[{"role": "system", "content": "You are a friendly"
-                           " chatbot teaching about presidents"},
-                          {"role": "user", "content": user_input}],
-                stream=True,
-            )
-            st.write_stream(stream)  # display the streamed response in the UI
+    # if go was pressed
+    if run_chat:
+        stream = client.chat.completions.create(
+            model="gpt-35-turbo-16k",
+            messages=[{"role": "system", "content": "You are a friendly"
+                       " chatbot teaching about presidents"},
+                      {"role": "user", "content": prompt}
+                      ],
+            stream=True,
+        )
+        st.write_stream(stream)  # display the streamed response in the UI
 
 
 def calculate_durations(df):
