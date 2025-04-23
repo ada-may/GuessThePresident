@@ -17,8 +17,7 @@ class MockSessionState(SimpleNamespace):
         if not hasattr(self, key):
             setattr(self, key, default)
         return getattr(self, key)
-
-
+    
 @patch.object(Game, "st")
 def test_initialize_session_state(mock_st):
     mock_st.session_state = MockSessionState()
@@ -113,3 +112,58 @@ def test_display_feedback_error(mock_st):
     with patch.object(mock_st, "error") as mock_error:
         Game.display_feedback()
         mock_error.assert_called_once_with("Oops!")
+
+@patch.object(Game, "st")
+@patch.object(Game.utils, "display_chatbot")
+def test_ai_hint_logic(mock_chatbot, mock_st):
+    mock_st.session_state = MockSessionState(
+        answer={"name": "George Washington"},
+        show_ai_hint=True
+    )
+    Game.utils.display_chatbot("George Washington", True)
+    mock_chatbot.assert_called_once_with("George Washington", True)
+
+@patch.object(Game, "st")
+@patch.object(Game, "load_new_question")
+def test_try_another_button(mock_load, mock_st):
+    mock_st.session_state = MockSessionState(answer={})
+    with patch.object(mock_st, "button", side_effect=[False, False, True, False, False, False]):
+        Game.initialize_session_state()
+        Game.load_new_question()
+        assert mock_load.called
+
+@patch.object(Game, "st")
+def test_submit_guess_button_logic(mock_st):
+    mock_st.session_state = MockSessionState(
+        answer={"name": "George Washington", "choices": ["George Washington"], "guessed": False}
+    )
+    with patch.object(mock_st, "button", side_effect=[False, False, False, False, True]), \
+         patch.object(Game, "submit_guess") as mock_submit:
+        mock_st.radio.return_value = "George Washington"
+        Game.submit_guess("George Washington")
+        assert mock_submit.called
+
+@patch.object(Game, "st")
+@patch.object(Game, "show_hint")
+def test_get_a_hint_button_calls_show_hint(mock_show_hint, mock_st):
+    mock_st.session_state = MockSessionState(
+        answer={
+            "name": "George Washington",
+            "picture": "http://fakeurl.com/image.jpg",
+            "choices": ["George Washington", "John Adams"],
+            "guessed": False,
+            "feedback": None,
+            "hint": "First President",
+            "hint_column": "Fun Fact"
+        },
+        hint="First President",
+        correct_count=0,
+        incorrect_count=0,
+        show_ai_hint=False,
+        guess_radio="George Washington"
+    )
+    mock_st.session_state.get = lambda key, default=None: getattr(mock_st.session_state, key, default)
+    mock_st.button.side_effect = lambda label: label == "Get a Hint"
+    with patch.object(mock_st, "write"):
+        Game.render_game_ui()
+    mock_show_hint.assert_called_once()

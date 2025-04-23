@@ -73,7 +73,7 @@ def display_feedback():
         else:
             st.error(msg_text)
 
-if __name__ == "__main__":
+def render_game_ui():
     # UI starts here
     st.title("Guess the President")
     initialize_session_state()
@@ -121,3 +121,6 @@ if __name__ == "__main__":
     if answer_data.get("guessed"):
         display_feedback()
         utils.display_chatbot(answer_data["name"])
+
+if __name__ == "__main__":
+    render_game_ui()
