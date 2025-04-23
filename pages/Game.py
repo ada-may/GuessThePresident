@@ -73,51 +73,51 @@ def display_feedback():
         else:
             st.error(msg_text)
 
+if __name__ == "__main__":
+    # UI starts here
+    st.title("Guess the President")
+    initialize_session_state()
 
-# UI starts here
-st.title("Guess the President")
-initialize_session_state()
+    # load a question if none exists yet
+    if not st.session_state.answer:
+        load_new_question()
 
-# load a question if none exists yet
-if not st.session_state.answer:
-    load_new_question()
+    answer_data = st.session_state.answer
 
-answer_data = st.session_state.answer
+    # show president image
+    st.image(st.session_state.answer["picture"], width=300)
 
-# show president image
-st.image(st.session_state.answer["picture"], width=300)
+    # hint button
+    if st.button("Get a Hint"):
+        show_hint()
 
-# hint button
-if st.button("Get a Hint"):
-    show_hint()
+    if st.button("I want an AI generated hint"):
+        st.session_state.show_ai_hint = True
 
-if st.button("I want an AI generated hint"):
-    st.session_state.show_ai_hint = True
+    if st.session_state.get("show_ai_hint"):
+        utils.display_chatbot(answer_data["name"], True)
 
-if st.session_state.get("show_ai_hint"):
-    utils.display_chatbot(answer_data["name"], True)
+    # try another button
+    if st.button("Try Another"):
+        load_new_question()
+        st.rerun()
 
-# try another button
-if st.button("Try Another"):
-    load_new_question()
-    st.rerun()
+    # show current score
+    st.write("Your score:")
+    st.write(
+        f"Correct: {st.session_state.correct_count} "
+        f"| Incorrect: {st.session_state.incorrect_count}")
 
-# show current score
-st.write("Your score:")
-st.write(
-    f"Correct: {st.session_state.correct_count} "
-    f"| Incorrect: {st.session_state.incorrect_count}")
+    # show radio options for guessing
+    options_with_placeholder = ["Select an option"] + answer_data["choices"]
+    user_guess = st.radio("Who is this President?",
+                          options_with_placeholder, index=0, key="guess_radio")
 
-# show radio options for guessing
-options_with_placeholder = ["Select an option"] + answer_data["choices"]
-user_guess = st.radio("Who is this President?",
-                      options_with_placeholder, index=0, key="guess_radio")
+    # submit guess button
+    if not answer_data["guessed"] and st.button("Submit Guess"):
+        submit_guess(user_guess)
 
-# submit guess button
-if not answer_data["guessed"] and st.button("Submit Guess"):
-    submit_guess(user_guess)
-
-# if guessed, show feedback and call chatbot
-if answer_data.get("guessed"):
-    display_feedback()
-    utils.display_chatbot(answer_data["name"])
+    # if guessed, show feedback and call chatbot
+    if answer_data.get("guessed"):
+        display_feedback()
+        utils.display_chatbot(answer_data["name"])

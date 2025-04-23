@@ -5,7 +5,7 @@ import streamlit as st
 from scraper import scrape_presidents
 
 
-def prepare_duartion_data(df):
+def prepare_duration_data(df):
     # add a column for how long each president served, grouped into bins
     duration_df = utils.calculate_durations(df)
     bins = [0, 4, 8, 12]
@@ -77,7 +77,7 @@ df = pd.DataFrame(scrape_presidents())
 
 st.subheader("Presidents by Years Served")
 st.altair_chart(plot_years_served_chart(
-    get_binned_counts(prepare_duartion_data(df))), use_container_width=True)
+    get_binned_counts(prepare_duration_data(df))), use_container_width=True)
 
 st.subheader("Presidents by Political Party")
 st.altair_chart(plot_party_pie_chart(
