@@ -1,4 +1,3 @@
-
 from scraper import scrape_presidents
 import database
 import streamlit as st

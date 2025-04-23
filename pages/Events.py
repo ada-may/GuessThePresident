@@ -60,11 +60,11 @@ def show_president_events(president_name):
             st.warning("No terms found for this president.")
         utils.display_chatbot(president_name)
 
+if __name__ == "__main__":
+    # UI: President selector and event display
+    selected_president = st.selectbox(
+        "Select a President:", database.fetch_president_names(),
+        placeholder="Choose a president")
 
-# UI: President selector and event display
-selected_president = st.selectbox(
-    "Select a President:", database.fetch_president_names(),
-    placeholder="Choose a president")
-
-if selected_president:
-    show_president_events(selected_president)
+    if selected_president:
+        show_president_events(selected_president)
