@@ -5,7 +5,7 @@ __init__.py                  0      0   100%
 api.py                      31      1    97%
 database.py                 63      3    95%
 pages/Events.py             44      5    89%
-pages/Game.py               69     11    84%
+pages/Game.py               70     11    84%
 pages/Visuals.py            35      0   100%
 scraper.py                  67      7    90%
 tests/__init__.py            0      0   100%
@@ -19,4 +19,4 @@ tests/test_scraper.py       50      0   100%
 tests/test_utils.py         60      0   100%
 utils.py                    30      9    70%
 --------------------------------------------
-TOTAL                      890     42    95%
+TOTAL                      891     42    95%

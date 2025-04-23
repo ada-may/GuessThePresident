@@ -90,6 +90,7 @@ def render_game_ui():
     # hint button
     if st.button("Get a Hint"):
         show_hint()
+        st.session_state.show_ai_hint = False
 
     if st.button("I want an AI generated hint"):
         st.session_state.show_ai_hint = True
