@@ -67,7 +67,7 @@ toml
    ```
    pip install -r requirements.txt
    ```
-4. **Save the Secrets**
+4. **Save the Secrets** - I need to fix this step to get it working
    ```
    mkdir C:\Users\adama\.streamlit\secrets.toml 
    ```
@@ -76,6 +76,11 @@ toml
    AZURE_OPENAI_API_KEY = "your_openai_api_key"
    AZURE_OPENAI_ENDPOINT = "your_openai_endpoint"
    ```
+5. **Run the Streamlit App**
+   ```
+   streamlit run Main.py
+   ```
+
 ## Running Tests
 ```
 pytest -v.
