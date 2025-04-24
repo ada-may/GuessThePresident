@@ -84,12 +84,13 @@ In `utils.py`, prompts are sent to `display_chatbot` OpenAI API using the `opena
 ```
 streamlit
 openai
-python-dotenv
 beautifulsoup4
 requests
 pandas
 pytest
 pytest-cov
+altair
+toml
 ```
 
 Install with:
