@@ -64,10 +64,18 @@ toml
    venv\Scripts\activate
    ```
 3. **Install Dependencies**  
-   ```bash
+   ```
    pip install -r requirements.txt
    ```
-
+4. **Save the Secrets**
+   ```
+   mkdir C:\Users\adama\.streamlit\secrets.toml 
+   ```
+   Then type this in with your information
+   ```
+   AZURE_OPENAI_API_KEY = "your_openai_api_key"
+   AZURE_OPENAI_ENDPOINT = "your_openai_endpoint"
+   ```
 ## Running Tests
 ```
 pytest -v.
