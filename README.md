@@ -52,7 +52,7 @@ altair
 toml
 ```
 
-### How to install
+### How to Run the App Locally
 1. **Clone the Repository**  
    ```
    git clone https://github.com/ada-may/guessthepresident.git
@@ -65,18 +65,15 @@ toml
    ```
 3. **Install Dependencies**  
    ```
-   pip install -r requirements.txt
+   pip install -r requirements.txt --no-warn-script-location
    ```
-4. **Save the Secrets** - I need to fix this step to get it working
+4. **Add API Secrets**
+   Create a file named `secrets.toml` inside a folder called `.streamlit` in your project directory:
    ```
-   mkdir C:\Users\adama\.streamlit\secrets.toml 
+   mkdir .streamlit
+   echo "AZURE_OPENAI_API_KEY = "your_openai_api_key" AZURE_OPENAI_ENDPOINT = "your_openai_endpoint" > .streamlit/secrets.toml
    ```
-   Then type this in with your information
-   ```
-   AZURE_OPENAI_API_KEY = "your_openai_api_key"
-   AZURE_OPENAI_ENDPOINT = "your_openai_endpoint"
-   ```
-5. **Run the Streamlit App**
+5. **Run the App**
    ```
    streamlit run Main.py
    ```
