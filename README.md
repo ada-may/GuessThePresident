@@ -1,14 +1,14 @@
 # Guess the President - click [here](https://guessthepresident.streamlit.app/) to open the app!
 
 ## Overview
-**Guess the President** is a Python Streamlit web app that displays and quizzes users on historical events associated with U.S. Presidents. It pulls data using web scraping and APIs, and includes a built-in ChatGPT-powered assistant to provide additional context, suggest presidents, and guide users in exploring U.S. history.
+**Guess the President** is a fun and interactive Streamlit web app all about U.S. presidents. It shows a table with information on every president, lets you see events from their time in office, and includes cool charts to help you explore the data. There is also a guessing game where you try to figure out the president from a photo—hints included if you need them. There’s also a built-in ChatGPT helper to give you clues, and teach you more about the presidents.
 
 ## Features
-- Interactive quiz based on real historical presidential events
-- Web scraping and API-based event collection
-- ChatGPT assistant integration for suggestions and explanations
-- Simple and clean Streamlit interface
-- Unit tests and test coverage with GitHub Actions
+- A fun quiz where you guess the president from a photo, with hints if needed
+- Information and events are pulled using web scraping and APIs
+- Built-in ChatGPT assistant for clues and to learn more about the historical figures
+- Clean and easy-to-use Streamlit interface
+- Tested with unit tests and GitHub Actions for test coverage tracking
 
 ## Deployed App
 You can deploy your app to Streamlit Cloud:
