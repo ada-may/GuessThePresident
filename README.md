@@ -1,7 +1,5 @@
 # Guess the President - click [here](https://guessthepresident.streamlit.app/) to open the app!
 
-[![Tests](https://github.com/ada-may/GuessThePresident/actions/workflows/python-tests.yml/badge.svg)](https://github.com/ada-may/GuessThePresident/actions/workflows/python-tests.yml)
-
 ## Overview
 **Guess the President** is a Python Streamlit web app that displays and quizzes users on historical events associated with U.S. Presidents. It pulls data using web scraping and APIs, and includes a built-in ChatGPT-powered assistant to provide additional context, suggest presidents, and guide users in exploring U.S. history.
 
@@ -75,3 +73,6 @@ toml
 pytest -v.
 ```
 Tests are located in `/tests`.
+
+[![Tests](https://github.com/ada-may/GuessThePresident/actions/workflows/python-tests.yml/badge.svg)](https://github.com/ada-may/GuessThePresident/actions/workflows/python-tests.yml)
+
