@@ -10,7 +10,7 @@ import altair as alt
 def test_prepare_duration_data(monkeypatch):
     sample_data = pd.DataFrame({
         "name": ["A", "B", "C"],
-        "term": ["2001–2005", "2001–2009", "1993–2001"]
+        "term": ["2001-2005", "2001-2009", "1993-2001"]
     })
 
     def mock_calculate_durations(df):

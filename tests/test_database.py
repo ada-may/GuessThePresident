@@ -4,9 +4,7 @@ import database
 import os
 import pandas as pd
 
-
 DATABASE_NAME = "presidents.db"
-
 
 @pytest.fixture(autouse=True)
 def setup_database():
@@ -16,7 +14,6 @@ def setup_database():
     yield
     if os.path.exists(database.DATABASE_NAME):
         os.remove(database.DATABASE_NAME)
-
 
 def test_create_table():
     conn = sqlite3.connect(database.DATABASE_NAME)
@@ -29,7 +26,6 @@ def test_create_table():
         "election", "vice_president"
     ]
     assert columns == expected_columns
-
 
 def test_insert_president():
     president = {
@@ -52,7 +48,6 @@ def test_insert_president():
     assert result is not None
     assert result[0] == "George Washington"
 
-
 def test_fetch_all_presidents():
     president = {
         "number": 2,
@@ -71,7 +66,6 @@ def test_fetch_all_presidents():
     assert "Name" in df.columns
     assert len(df) > 0
 
-
 def test_fetch_president_names():
     president = {
         "number": 3,
@@ -88,7 +82,6 @@ def test_fetch_president_names():
     assert "Thomas Jefferson" in result
     assert isinstance(result, list)
     assert len(result) > 0
-
 
 def test_fetch_random_president():
     president = {
@@ -107,7 +100,6 @@ def test_fetch_random_president():
     assert "name" in result
     assert "hint" in result
     assert "hint_column" in result
-
 
 def test_fetch_wrong_presidents():
     correct_president = {
@@ -148,7 +140,6 @@ def test_fetch_wrong_presidents():
     assert len(wrong_names) == 2
     assert "James Monroe" not in wrong_names
 
-
 @pytest.mark.parametrize("president, expected_name", [
     ({"number": 6,
       "picture": "image_url",
@@ -171,7 +162,6 @@ def test_insert_president_parametrized(president, expected_name):
     assert result is not None
     assert result[0] == expected_name
 
-
 def count_records_in_presidents():
     conn = sqlite3.connect(database.DATABASE_NAME)
     cursor = conn.cursor()
@@ -179,7 +169,6 @@ def count_records_in_presidents():
     count = cursor.fetchone()[0]
     conn.close()
     return count
-
 
 def test_reset_database_when_table_exists():
     president = {
@@ -196,7 +185,6 @@ def test_reset_database_when_table_exists():
     assert count_records_in_presidents() > 0
     database.reset_database()
     assert count_records_in_presidents() == 0
-
 
 def test_reset_database_when_table_does_not_exist():
     conn = sqlite3.connect(database.DATABASE_NAME)
@@ -222,7 +210,6 @@ def test_reset_database_when_table_does_not_exist():
     conn.close()
     assert table_exists is not None
     assert count_records_in_presidents() == 0
-
 
 def test_empty_database_after_reset():
     president = {

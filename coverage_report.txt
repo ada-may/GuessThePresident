@@ -16,7 +16,7 @@ tests/test_Visuals.py       51      0   100%
 tests/test_api.py           76      4    95%
 tests/test_database.py     115      1    99%
 tests/test_scraper.py       50      0   100%
-tests/test_utils.py         60      0   100%
-utils.py                    30      9    70%
+tests/test_utils.py         78      0   100%
+utils.py                    30      0   100%
 --------------------------------------------
-TOTAL                      891     42    95%
+TOTAL                      909     33    96%

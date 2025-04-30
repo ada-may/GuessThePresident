@@ -1,7 +1,6 @@
 from unittest.mock import patch, MagicMock
 import api
 
-
 @patch("api.requests.get")
 def test_get_events_success(mock_get):
     mock_response = MagicMock()
@@ -14,7 +13,6 @@ def test_get_events_success(mock_get):
         {"content": "Event 1"}, {"content": "Event 2"}]}
     mock_get.assert_called_once_with("https://events.historylabs.io/year/2020")
 
-
 @patch("api.requests.get")
 def test_get_events_failure(mock_get):
     mock_response = MagicMock()
@@ -24,7 +22,6 @@ def test_get_events_failure(mock_get):
     result = api.get_events(2020)
     assert result is None
     mock_get.assert_called_once_with("https://events.historylabs.io/year/2020")
-
 
 @patch("api.get_events")
 @patch("api.parse_term_dates")
@@ -45,7 +42,6 @@ def test_get_events_for_term(mock_parse_term_dates, mock_get_events):
         2022: ["Event B"],
         2023: ["Event C"]
     }
-
 
 @patch("api.scrape_presidents")
 @patch("api.get_events_for_term")
@@ -74,7 +70,6 @@ def test_get_events_for_president(mock_get_events_for_term,
     mock_get_events_for_term.assert_called_once_with("1861-1865")
     mock_scrape_presidents.assert_called_once()
 
-
 @patch("api.scrape_presidents")
 def test_get_events_for_president_not_found(mock_scrape_presidents):
     mock_scrape_presidents.return_value = [
@@ -84,7 +79,6 @@ def test_get_events_for_president_not_found(mock_scrape_presidents):
     result = api.get_events_for_president("George Washington")
     assert result is None
     mock_scrape_presidents.assert_called_once()
-
 
 @patch("api.requests.get")
 def test_get_events_empty_response(mock_get):
@@ -96,11 +90,9 @@ def test_get_events_empty_response(mock_get):
     assert result == {"events": []}
     mock_get.assert_called_once_with("https://events.historylabs.io/year/2020")
 
-
 def test_get_events_invalid_year():
     result = api.get_events("not_a_year")
     assert result is None
-
 
 def mock_parse_term_dates(term, just_years=True):
     start_str, end_str = term.split("-")
@@ -115,7 +107,6 @@ def mock_parse_term_dates(term, just_years=True):
         start = f"{start_year}-01-01"
         end = f"{end_year}-01-01" if end_str != "Incumbent" else "2026-01-01"
         return start, end
-
 
 @patch("api.parse_term_dates", side_effect=mock_parse_term_dates)
 @patch("api.get_events")

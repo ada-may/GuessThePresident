@@ -36,10 +36,10 @@ def test_parse_term_dates_with_full_date_range():
     start, end = parse_term_dates(term, just_years=False)
     assert start.year == 1913
     assert end.year == 1921
-    assert start.month == 3  # March
-    assert end.month == 3  # March
-    assert start.day == 4  # Start day is 4
-    assert end.day == 4  # End day is 4
+    assert start.month == 3
+    assert end.month == 3
+    assert start.day == 4
+    assert end.day == 4
 
 
 def test_parse_term_dates_with_different_months():
@@ -47,10 +47,10 @@ def test_parse_term_dates_with_different_months():
     start, end = parse_term_dates(term, just_years=False)
     assert start.year == 1921
     assert end.year == 1923
-    assert start.month == 3  # March
-    assert end.month == 8  # August
-    assert start.day == 4  # Start day is 4
-    assert end.day == 2  # End day is 2
+    assert start.month == 3
+    assert end.month == 8
+    assert start.day == 4
+    assert end.day == 2
 
 def test_parse_term_dates_with_only_years():
     term = "1913 - 1921"
@@ -100,9 +100,9 @@ def test_calculate_durations():
                (int(term.split("-")[0]), int(term.split("-")[1]))):
         result_df = calculate_durations(df)
     assert result_df.shape == (3, 4)
-    assert result_df["Years in Office"].iloc[0] == 8  # 1797 - 1789
-    assert result_df["Years in Office"].iloc[1] == 8  # 1809 - 1801
-    assert result_df["Years in Office"].iloc[2] == 4  # 1865 - 1861
+    assert result_df["Years in Office"].iloc[0] == 8
+    assert result_df["Years in Office"].iloc[1] == 8
+    assert result_df["Years in Office"].iloc[2] == 4
     assert set(result_df.columns) == {
         "Name", "Start", "End", "Years in Office"}
     george_washington = result_df[result_df["Name"] == "George Washington"]
