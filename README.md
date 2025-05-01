@@ -15,11 +15,12 @@
 ## Deployed App
 You can deploy your app to Streamlit Cloud:
 1. Push the repo to GitHub  
-2. Go to [streamlit.io/cloud](https://streamlit.io/cloud) and click “New App”  
-3. Choose `ada-may/guessthepresident`  
-4. Set the main file to `Main.py`  
-5. Add your API key under **Secrets**  
-6. Click Deploy
+2. Go to [streamlit.io/cloud](https://streamlit.io/cloud), sign in, and click “Create App”
+3. Click "Deploy a public app from GitHub"
+4. Choose `ada-may/GuessThePresident`  
+5. Set the main file to `Main.py`  
+6. Press on "Advanced Settings", and add your API key under **Secrets**  
+7. Click Deploy
 
 ## ChatGPT Integration
 This project uses OpenAI’s GPT API to:
