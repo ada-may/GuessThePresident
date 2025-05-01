@@ -1,5 +1,7 @@
 # Guess the President - click [here](https://guessthepresident.streamlit.app/) to open the app!
 
+[![Tests](https://github.com/ada-may/GuessThePresident/actions/workflows/python-tests.yml/badge.svg)](https://github.com/ada-may/GuessThePresident/actions/workflows/python-tests.yml)
+
 ## Overview
 **Guess the President** is a fun and interactive Streamlit web app all about U.S. presidents. It shows a table with information on every president, lets you see events from their time in office, and includes cool charts to help you explore the data. There is also a guessing game where you try to figure out the president from a photo—hints included if you need them. There’s also a built-in ChatGPT helper to give you clues, and teach you more about the presidents.
 
@@ -53,27 +55,17 @@ toml
 ```
 
 ### How to Run the App Locally
-1. **Clone the Repository**  
+1. **Install Dependencies**  
    ```
-   git clone https://github.com/ada-may/guessthepresident.git
-   cd guessthepresident
+   pip install -r requirements.txt
    ```
-2. **Create and Activate a Virtual Environment (on Windows)**  
+2. **Add API Secrets**
+   Create a file named `secrets.toml` inside a folder called `.streamlit` in your project directory. Paste this in with your keys.
    ```
-   python -m venv venv
-   venv\Scripts\activate
+   AZURE_OPENAI_API_KEY = "your_openai_api_key"
+   AZURE_OPENAI_ENDPOINT = "your_openai_endpoint"
    ```
-3. **Install Dependencies**  
-   ```
-   pip install -r requirements.txt --no-warn-script-location
-   ```
-4. **Add API Secrets**
-   Create a file named `secrets.toml` inside a folder called `.streamlit` in your project directory:
-   ```
-   mkdir .streamlit
-   echo "AZURE_OPENAI_API_KEY = "your_openai_api_key" AZURE_OPENAI_ENDPOINT = "your_openai_endpoint" > .streamlit/secrets.toml
-   ```
-5. **Run the App**
+3. **Run the App**
    ```
    streamlit run Main.py
    ```
@@ -82,7 +74,6 @@ toml
 ```
 pytest -v.
 ```
-Tests are located in `/tests`.
+Tests are located in `/tests`. Make sure to run the tests from `Main.py`.
 
-[![Tests](https://github.com/ada-may/GuessThePresident/actions/workflows/python-tests.yml/badge.svg)](https://github.com/ada-may/GuessThePresident/actions/workflows/python-tests.yml)
 
