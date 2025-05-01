@@ -1,5 +1,3 @@
-import sys
-import os
 import pages.Visuals as Visuals
 import pandas as pd
 import utils

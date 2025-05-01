@@ -1,5 +1,3 @@
-import sys
-import os
 import pages.Game as Game
 from types import SimpleNamespace
 import pytest

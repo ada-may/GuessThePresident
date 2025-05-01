@@ -1,9 +1,20 @@
 import utils
 import altair as alt
-import altair.theme
 import pandas as pd
 import streamlit as st
 from scraper import scrape_presidents
+
+@alt.theme.register('custom_streamlit_theme', enable=True)
+def custom_streamlit_theme():
+    return alt.theme.ThemeConfig({
+        "config": {
+            "view": {"stroke": "transparent"},
+            "axis": {"labelFontSize": 12, "titleFontSize": 14},
+            "bar": {"cornerRadiusTopLeft": 4, "cornerRadiusTopRight": 4},
+            "font": "Helvetica",
+            "background": "#f0f2f6"
+        }
+    })
 
 
 def prepare_duration_data(df):

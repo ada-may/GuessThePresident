@@ -1,5 +1,3 @@
-import sys
-import os
 import pages.Events as Events
 import pytest
 from unittest.mock import patch
