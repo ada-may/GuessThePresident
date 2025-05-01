@@ -36,9 +36,9 @@ This project depends on the following Python libraries:
 - `beautifulsoup4` – HTML parsing and web scraping
 - `requests` – Handling HTTP requests
 - `pandas` – Data analysis and manipulation
-- `altair` – Declarative charting library for data visualization
 - `pytest` – Unit testing framework
 - `pytest-cov` – Test coverage reporting for pytest
+- `altair` – Declarative charting library for data visualization
 - `toml` – Working with `.toml` config files (used for settings)
 
 ### Dependencies
@@ -60,7 +60,7 @@ toml
    pip install -r requirements.txt
    ```
 2. **Add API Secrets**
-   Create a file named `secrets.toml` inside a folder called `.streamlit` in your project directory. Paste this in with your keys.
+   Create a file named `secrets.toml` inside a folder called `.streamlit` in your project directory. Paste this in with your key and endpoint.
    ```
    AZURE_OPENAI_API_KEY = "your_openai_api_key"
    AZURE_OPENAI_ENDPOINT = "your_openai_endpoint"
