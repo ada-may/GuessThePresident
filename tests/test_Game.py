@@ -1,7 +1,6 @@
 import sys
 import os
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../pages')))
-import Game
+import pages.Game as Game
 from types import SimpleNamespace
 import pytest
 from unittest.mock import patch
@@ -34,8 +33,8 @@ def test_initialize_session_state(mock_st):
     assert mock_st.session_state["show_ai_hint"] is False
 
 @patch.object(Game, "st")
-@patch("Game.database.fetch_random_president")
-@patch("Game.database.fetch_wrong_presidents")
+@patch("pages.Game.database.fetch_random_president")
+@patch("pages.Game.database.fetch_wrong_presidents")
 def test_load_new_question(mock_wrong, mock_fetch, mock_st):
     mock_st.session_state = MockSessionState()
     mock_fetch.return_value = {

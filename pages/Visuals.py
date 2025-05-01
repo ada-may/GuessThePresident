@@ -1,5 +1,6 @@
 import utils
 import altair as alt
+import altair.theme
 import pandas as pd
 import streamlit as st
 from scraper import scrape_presidents
